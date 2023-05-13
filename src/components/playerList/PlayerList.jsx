@@ -6,10 +6,13 @@ const PlayerList = ({ squareData }) => {
   return (
     <div>
       <table>
+        <thead>
       <tr>
         <td><b>Player Name</b></td>
         <td><b>Score</b></td>
       </tr>
+      </thead>
+      <tbody>
     {
       squareData.map((square)=>{
         const {id, players} = square;
@@ -26,6 +29,7 @@ const PlayerList = ({ squareData }) => {
         })
       })
     }
+     </tbody>
     </table>
   </div>
   );
