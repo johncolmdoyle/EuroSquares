@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-eurosquares-dev-111542-authRole",
+      "UnauthRoleArn": "arn:aws:iam::694525212676:role/amplify-eurosquares-dev-111542-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::694525212676:role/amplify-eurosquares-dev-111542-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-eurosquares-dev-111542-deployment",
+      "UnauthRoleName": "amplify-eurosquares-dev-111542-unauthRole",
+      "StackName": "amplify-eurosquares-dev-111542",
+      "StackId": "arn:aws:cloudformation:us-east-1:694525212676:stack/amplify-eurosquares-dev-111542/07e72190-f1a1-11ed-b069-0a571e6986fb",
+      "AmplifyAppId": "d3fd3rj1auyvab"
+    }
+  }
+}
