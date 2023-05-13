@@ -71,6 +71,38 @@
     }
   },
   "parameters": {
+    "AMPLIFY_function_bandLambda_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "bandLambda"
+        }
+      ]
+    },
+    "AMPLIFY_function_bandLambda_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "bandLambda"
+        }
+      ]
+    },
+    "AMPLIFY_function_squareLambda_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "squareLambda"
+        }
+      ]
+    },
+    "AMPLIFY_function_squareLambda_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "squareLambda"
+        }
+      ]
+    },
     "AMPLIFY_hosting_amplifyhosting_appId": {
       "usedBy": [
         {

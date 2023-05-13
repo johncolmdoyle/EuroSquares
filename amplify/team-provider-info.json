@@ -19,8 +19,21 @@
         }
       },
       "function": {
-        "squareLambda": {},
-        "bandLambda": {}
+        "squareLambda": {
+          "deploymentBucketName": "amplify-eurosquares-dev-111542-deployment",
+          "s3Key": "amplify-builds/squareLambda-73514b716a754c346459-build.zip"
+        },
+        "bandLambda": {
+          "deploymentBucketName": "amplify-eurosquares-dev-111542-deployment",
+          "s3Key": "amplify-builds/bandLambda-52785958446b2b57677a-build.zip"
+        }
+      },
+      "storage": {
+        "squareTable": {},
+        "bandTable": {}
+      },
+      "api": {
+        "v1": {}
       }
     }
   }
