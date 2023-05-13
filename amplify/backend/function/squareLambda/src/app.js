@@ -59,106 +59,98 @@ const convertUrlType = (param, type) => {
  * HTTP Get method for list objects *
  ********************************/
 
-app.get(path + hashKeyPath, function(req, res) {
-  const condition = {}
-  condition[partitionKeyName] = {
-    ComparisonOperator: 'EQ'
-  }
+app.get(path, function (req, res) {
+  console.log("GET: " + path);
 
-  if (userIdPresent && req.apiGateway) {
-    condition[partitionKeyName]['AttributeValueList'] = [req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH ];
-  } else {
-    try {
-      condition[partitionKeyName]['AttributeValueList'] = [ convertUrlType(req.params[partitionKeyName], partitionKeyType) ];
-    } catch(err) {
-      res.statusCode = 500;
-      res.json({error: 'Wrong column type ' + err});
-    }
-  }
+  if (req.query.id) {
+    // Search by id
+    console.log("Searching by id=" + decodeURI(req.query.id));
 
-  let queryParams = {
-    TableName: tableName,
-    KeyConditions: condition
-  }
-
-  dynamodb.query(queryParams, (err, data) => {
-    if (err) {
-      res.statusCode = 500;
-      res.json({error: 'Could not load items: ' + err});
-    } else {
-      res.json(data.Items);
-    }
-  });
-});
-
-/*****************************************
- * HTTP Get method for get single object *
- *****************************************/
-
-app.get(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
-  const params = {};
-  if (userIdPresent && req.apiGateway) {
-    params[partitionKeyName] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
-  } else {
-    params[partitionKeyName] = req.params[partitionKeyName];
-    try {
-      params[partitionKeyName] = convertUrlType(req.params[partitionKeyName], partitionKeyType);
-    } catch(err) {
-      res.statusCode = 500;
-      res.json({error: 'Wrong column type ' + err});
-    }
-  }
-  if (hasSortKey) {
-    try {
-      params[sortKeyName] = convertUrlType(req.params[sortKeyName], sortKeyType);
-    } catch(err) {
-      res.statusCode = 500;
-      res.json({error: 'Wrong column type ' + err});
-    }
-  }
-
-  let getItemParams = {
-    TableName: tableName,
-    Key: params
-  }
-
-  dynamodb.get(getItemParams,(err, data) => {
-    if(err) {
-      res.statusCode = 500;
-      res.json({error: 'Could not load items: ' + err.message});
-    } else {
-      if (data.Item) {
-        res.json(data.Item);
-      } else {
-        res.json(data) ;
+    let queryParams = {
+      TableName: tableName,
+      FilterExpression: '#id = :id',
+      ExpressionAttributeNames: { "#id": "id" },
+      ExpressionAttributeValues: {
+        ':id': decodeURI(req.query.id)
       }
     }
-  });
-});
 
+    dynamodb.scan(queryParams, (err, data) => {
+      if (err) {
+        res.statusCode = 500;
+        res.json({ error: 'Could not load items: ' + err });
+      } else {
+        res.json(data.Items);
+      }
+    });
+  } else {
+    // Get All
+    let params = {
+      TableName: tableName
+    }
+
+    dynamodb.scan(params, (err, data) => {
+      if (err) {
+        res.statusCode = 500;
+        res.json({ error: 'Could not load items: ' + err });
+      } else {
+        console.log("Response: " + JSON.stringify(data));
+
+        res.json(data.Items);
+      }
+    });
+  }
+});
 
 /************************************
 * HTTP put method for insert object *
 *************************************/
 
 app.put(path, function(req, res) {
+  console.log("PUT: " + path);
+  if (!req.body.queryStringParameters.id) {
+    res.statusCode = 500;
+    res.json({ error: "Missing Square ID", url: req.url, body: req.body });
+  } else {
+    console.log("Searching for square");
+    const params = {};
+    params["id"] = decodeURI(req.body.queryStringParameters.id);
 
-  if (userIdPresent) {
-    req.body['userId'] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
-  }
-
-  let putItemParams = {
-    TableName: tableName,
-    Item: req.body
-  }
-  dynamodb.put(putItemParams, (err, data) => {
-    if (err) {
-      res.statusCode = 500;
-      res.json({ error: err, url: req.url, body: req.body });
-    } else{
-      res.json({ success: 'put call succeed!', url: req.url, data: data })
+    // Get initial object
+    let getItemParams = {
+      TableName: tableName,
+      Key: params
     }
-  });
+  
+    dynamodb.get(getItemParams,(err, data) => {
+      if(err) {
+        res.statusCode = 500;
+        res.json({error: 'Could not load square: ' + err.message});
+      } else {
+        console.log("Found square");
+        if (!data.Item.hasOwnProperty('players')) {
+          data.Item.players = [];
+        }
+
+        data.Item.players.push(req.body.body.name);
+
+        console.log("Updating square");
+        // Update the item
+        let putItemParams = {
+          TableName: tableName,
+          Item: data.Item
+        }
+        dynamodb.put(putItemParams, (putErr, putData) => {
+          if (putErr) {
+            res.statusCode = 500;
+            res.json({ error: putErr, url: req.url, body: req.body });
+          } else{
+            res.json({ success: 'put call succeed!', url: req.url, data: putData })
+          }
+        });
+      }
+    });
+  }  
 });
 
 /************************************

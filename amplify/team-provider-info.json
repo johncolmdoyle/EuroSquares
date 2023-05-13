@@ -21,7 +21,7 @@
       "function": {
         "squareLambda": {
           "deploymentBucketName": "amplify-eurosquares-dev-111542-deployment",
-          "s3Key": "amplify-builds/squareLambda-73514b716a754c346459-build.zip"
+          "s3Key": "amplify-builds/squareLambda-4f4973787564414c784d-build.zip"
         },
         "bandLambda": {
           "deploymentBucketName": "amplify-eurosquares-dev-111542-deployment",

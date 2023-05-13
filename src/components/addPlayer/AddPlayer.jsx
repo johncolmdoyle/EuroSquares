@@ -1,25 +1,38 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { API } from 'aws-amplify'
 
 const AddPlayer = ({ getSquare, squareId }) => {
     const [player, setPlayer] = useState("");
   
+    async function addPlayerToSquare(newPlayer) {
+        const apiName = 'v1';
+        const path = '/squares';
+        const myInit = {
+            body: {
+                body: newPlayer,
+                queryStringParameters: {
+                    id: squareId,
+                },
+            },
+            headers: {} 
+        };
+
+        try {
+            const data = await API.put(apiName, path, myInit);
+            getSquare();
+        } catch (err) { console.log('error adding player') }
+    }
+
     const handleSubmit = (e) => {
       e.preventDefault();
-      const newPlayer = { player, squareId };
+      const newPlayer = { 
+        "name": player 
+      };
       console.log(newPlayer);
-      addNewPlayer(newPlayer);
+      addPlayerToSquare(newPlayer);
       setPlayer("");
-    };
-  
-    const addNewPlayer = async (newPlayer) => {
-      try {
-        // add player
-      } catch (error) {
-        console.log(error);
-      }
-      getSquare();
     };
   
     return (
