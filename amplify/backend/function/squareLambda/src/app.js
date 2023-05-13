@@ -108,6 +108,7 @@ app.get(path, function (req, res) {
 
 app.put(path, function(req, res) {
   console.log("PUT: " + path);
+
   if (!req.body.queryStringParameters.id) {
     res.statusCode = 500;
     res.json({ error: "Missing Square ID", url: req.url, body: req.body });
@@ -132,7 +133,44 @@ app.put(path, function(req, res) {
           data.Item.players = [];
         }
 
-        data.Item.players.push(req.body.body.name);
+        data.Item.players.push({
+          name: req.body.body.name,
+          countries: []});
+
+        const numPeople = data.Item.players.length;
+        const numNumbers = 26;
+        const maxPerPerson = Math.floor(numNumbers / numPeople);
+        const remainder = numNumbers % numPeople;
+
+        // Populate country ids
+        const availableNumbers = [];
+        for (let i = 1; i <= numNumbers; i++) {
+          availableNumbers.push(i);
+        }
+
+        // Randomize
+        for (let i = availableNumbers.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [availableNumbers[i], availableNumbers[j]] = [availableNumbers[j], availableNumbers[i]];
+        }
+
+        // Assign them to all players
+        for (let i = 0; i < numPeople; i++) {
+          data.Item.players[i].countries = [];
+          const assignedNumbers = new Set(data.Item.players[i].countries);
+          const numAssigned = assignedNumbers.size;
+          let numToAssign = numAssigned < maxPerPerson ? maxPerPerson - numAssigned : 0;
+          if (i < remainder) {
+            numToAssign++;
+          }
+          if (numToAssign > 0) {
+            for (let j = 0; j < numToAssign; j++) {
+              const newNumber = availableNumbers[j];
+              data.Item.players[i].countries.push(newNumber);
+            }
+            availableNumbers.splice(0, numToAssign);
+          }
+        }
 
         console.log("Updating square");
         // Update the item

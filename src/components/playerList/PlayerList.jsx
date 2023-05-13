@@ -5,25 +5,28 @@ const PlayerList = ({ squareData }) => {
 
   return (
     <div>
+      <table>
+      <tr>
+        <td><b>Player Name</b></td>
+        <td><b>Score</b></td>
+      </tr>
     {
       squareData.map((square)=>{
         const {id, players} = square;
-        console.log("Players: " + players)
         return players.map((player)=>{
-          console.log("Player: " + player)
           return (
-            <div
-              key={player}
-              className="tasklist mt-2 d-flex justify-content-between p-2 rounded-2"
+            <tr
+              key={player.name}
+              className="row mt-2 d-flex justify-content-between p-2 rounded-2"
             >
-              <div>
-                <h4>{player}</h4>
-              </div>
-            </div>
+              <td className="col-sm">{player.name}</td>
+              <td className="col-sm">{player.score ? player.score : 0}</td>
+            </tr>
           )
         })
       })
     }
+    </table>
   </div>
   );
 };
