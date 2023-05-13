@@ -1,0 +1,10 @@
+{
+  "resourceName": "bandTable",
+  "tableName": "bandTable",
+  "partitionKey": {
+    "fieldName": "id",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}

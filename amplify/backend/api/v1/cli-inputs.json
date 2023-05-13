@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "paths": {
+    "/squares": {
+      "name": "/squares",
+      "lambdaFunction": "squareLambda",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/bands": {
+      "name": "/bands",
+      "lambdaFunction": "bandLambda",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "resourceName": "squareTable",
+  "tableName": "squareTable",
+  "partitionKey": {
+    "fieldName": "id",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}

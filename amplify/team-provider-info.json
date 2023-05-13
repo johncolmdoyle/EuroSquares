@@ -10,6 +10,18 @@
       "StackName": "amplify-eurosquares-dev-111542",
       "StackId": "arn:aws:cloudformation:us-east-1:694525212676:stack/amplify-eurosquares-dev-111542/07e72190-f1a1-11ed-b069-0a571e6986fb",
       "AmplifyAppId": "d3fd3rj1auyvab"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d3fd3rj1auyvab",
+          "type": "manual"
+        }
+      },
+      "function": {
+        "squareLambda": {},
+        "bandLambda": {}
+      }
     }
   }
 }
