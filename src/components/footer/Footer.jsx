@@ -4,12 +4,10 @@ const Footer = () => {
   return (
       <div 
       style={{
-        backgroundColor: '#fff',
         opacity: 0.7,
         bottom: 0,
         left: 0,
         width: '100%',
-        position: 'absolute'
       }}>
         <div className="d-flex align-items-center flex-column justify-content-center p-2 fs-6">
         <a href="https://linkedin.com/in/johncolmdoyle">

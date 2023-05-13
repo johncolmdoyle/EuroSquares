@@ -49,3 +49,10 @@ footer i {
 footer i:hover {
   color: rgb(20, 78, 59);
 }
+.square {
+  width: 200px;
+  padding: 10px;
+  border: 5px solid rgb(192, 199, 224);
+  border-radius: 20px;
+  background-color: rgb(217 217 217);
+}

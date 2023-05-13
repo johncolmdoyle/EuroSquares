@@ -62,16 +62,16 @@ const convertUrlType = (param, type) => {
 app.get(path, function (req, res) {
   console.log("GET: " + path);
 
-  if (req.query.name) {
-    // Search by Course
-    console.log("Searching by name=" + decodeURI(req.query.name));
+  if (req.query.id) {
+    // Search by id
+    console.log("Searching by id=" + decodeURI(req.query.id));
 
     let queryParams = {
       TableName: tableName,
-      FilterExpression: '#name = :name',
-      ExpressionAttributeNames: { "#name": "name" },
+      FilterExpression: '#id = :id',
+      ExpressionAttributeNames: { "#id": "id" },
       ExpressionAttributeValues: {
-        ':name': decodeURI(req.query.name)
+        ':id': decodeURI(req.query.id)
       }
     }
 
@@ -100,51 +100,6 @@ app.get(path, function (req, res) {
       }
     });
   }
-});
-
-/*****************************************
- * HTTP Get method for get single object *
- *****************************************/
-
-app.get(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
-  const params = {};
-  if (userIdPresent && req.apiGateway) {
-    params[partitionKeyName] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
-  } else {
-    params[partitionKeyName] = req.params[partitionKeyName];
-    try {
-      params[partitionKeyName] = convertUrlType(req.params[partitionKeyName], partitionKeyType);
-    } catch(err) {
-      res.statusCode = 500;
-      res.json({error: 'Wrong column type ' + err});
-    }
-  }
-  if (hasSortKey) {
-    try {
-      params[sortKeyName] = convertUrlType(req.params[sortKeyName], sortKeyType);
-    } catch(err) {
-      res.statusCode = 500;
-      res.json({error: 'Wrong column type ' + err});
-    }
-  }
-
-  let getItemParams = {
-    TableName: tableName,
-    Key: params
-  }
-
-  dynamodb.get(getItemParams,(err, data) => {
-    if(err) {
-      res.statusCode = 500;
-      res.json({error: 'Could not load items: ' + err.message});
-    } else {
-      if (data.Item) {
-        res.json(data.Item);
-      } else {
-        res.json(data) ;
-      }
-    }
-  });
 });
 
 

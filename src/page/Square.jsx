@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import AddPlayer from "../components/addPlayer/AddPlayer";
+import PlayerSquare from "../components/playerSquare/PlayerSquare";
 import PlayerList from "../components/playerList/PlayerList";
 import { v4 as uuidv4 } from 'uuid';
 import { validate as uuidValidate } from 'uuid';
@@ -8,9 +8,8 @@ import { useParams } from 'react-router-dom';
 
 const Square = () => {  
     const [squareData, setSquareData] = useState([]);
+    const [bandData, setBandData] = useState([]);
     let { squareId } = useParams();
-
-    console.log("Inside Square");
 
     async function getSquare() {
         const apiName = 'v1';
@@ -22,14 +21,29 @@ const Square = () => {
         } catch (err) { console.log('error getting square') }
     }
 
+    async function getBands() {
+      const apiName = 'v1';
+      const path = '/bands';
+
+      try {
+          const data = await API.get(apiName, path);
+          setBandData(data);
+      } catch (err) { console.log('error gettings bands') }
+  }
+
     if (squareData.length < 1) {
       getSquare();
     } 
 
+    if (bandData.length < 1) {
+      getBands();
+    } 
+
     return (
       <div className="mt-4 d-flex justify-content-center flex-column">
-        <AddPlayer getSquare={getSquare} squareId={squareId}/>
-        <PlayerList squareData={squareData} />
+        <PlayerList squareData={squareData} bandData={bandData} />
+        <hr />
+        <PlayerSquare squareData={squareData} bandData={bandData} />
       </div>
     );
   };
