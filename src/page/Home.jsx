@@ -1,24 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import AddPlayer from "../components/addPlayer/AddPlayer";
 import PlayerList from "../components/playerList/PlayerList";
 import { v4 as uuidv4 } from 'uuid';
-import { validate as uuidValidate } from 'uuid';
 import { API } from 'aws-amplify'
 import { Link } from 'react-router-dom';
 
 const Home = () => {  
     const [squareData, setSquareData] = useState([]);
-    const [squareId, setSquareId] = useState([]);
+    const [squareId, setSquareId] = useState('');
+    const [squareCreated, setSquareCreated] = useState(false);
 
-    useEffect(() => {
-        createSquare()
-      }, [squareId])
-    
-    async function createSquare() {
+    async function createSquare(id) {
         const apiName = 'v1';
         const path = '/squares';
         const myInit = {
-            body: {id: squareId},
+            body: {id: id},
             headers: {} 
         };
 
@@ -37,10 +33,12 @@ const Home = () => {
         } catch (err) { console.log('error getting square') }
     }
 
-
-    if(!uuidValidate(squareId)) {
-        setSquareId(uuidv4())
-        setSquareData([{"id":squareId,"players":[]}])
+    if(squareId === "" && !squareCreated) {
+        const id = uuidv4()
+        setSquareCreated(true)
+        setSquareId(id)
+        setSquareData([{"id":id,"players":[]}])
+        createSquare(id)
     }
 
     return (
