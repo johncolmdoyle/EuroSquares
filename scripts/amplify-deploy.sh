@@ -15,12 +15,12 @@ REACTCONFIG="{\
 AWSCLOUDFORMATIONCONFIG="{\
 \"configLevel\":\"project\",\
 \"useProfile\":true,\
-\"profileName\":\"amplify\",\
+\"profileName\":\"GitHubDeploy\",\
 \"region\":\"us-east-1\"\
 }"
 
 AMPLIFY="{\
-\"projectName\":\"jainewebapp\",\
+\"projectName\":\"EuroSquares\",\
 \"envName\":\"${BRANCH_NAME}\",\
 \"defaultEditor\":\"code\"\
 }"
