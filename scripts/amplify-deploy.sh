@@ -14,8 +14,7 @@ REACTCONFIG="{\
 
 AWSCLOUDFORMATIONCONFIG="{\
 \"configLevel\":\"project\",\
-\"useProfile\":true,\
-\"profileName\":\"GitHubDeploy\",\
+\"useProfile\":false,\
 \"region\":\"us-east-1\"\
 }"
 
