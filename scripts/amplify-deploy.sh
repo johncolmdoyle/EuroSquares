@@ -14,7 +14,8 @@ REACTCONFIG="{\
 
 AWSCLOUDFORMATIONCONFIG="{\
 \"configLevel\":\"project\",\
-\"useProfile\":false,\
+\"useProfile\":true,\
+\"profileName\":\"amplify\",\
 \"region\":\"us-east-1\"\
 }"
 
