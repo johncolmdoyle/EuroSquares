@@ -23,7 +23,7 @@ const Home = () => {
         };
 
         try {
-            const data = await API.post(apiName, path, myInit);
+            await API.post(apiName, path, myInit);
         } catch (err) { console.log('error creating square') }
     }
 

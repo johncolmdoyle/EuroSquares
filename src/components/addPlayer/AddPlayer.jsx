@@ -20,7 +20,7 @@ const AddPlayer = ({ getSquare, squareId }) => {
         };
 
         try {
-            const data = await API.put(apiName, path, myInit);
+            await API.put(apiName, path, myInit);
             getSquare();
         } catch (err) { console.log('error adding player') }
     }

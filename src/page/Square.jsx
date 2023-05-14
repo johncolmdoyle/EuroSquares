@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PlayerSquare from "../components/playerSquare/PlayerSquare";
 import PlayerList from "../components/playerList/PlayerList";
-import { v4 as uuidv4 } from 'uuid';
-import { validate as uuidValidate } from 'uuid';
 import { API } from 'aws-amplify'
 import { useParams } from 'react-router-dom';
 

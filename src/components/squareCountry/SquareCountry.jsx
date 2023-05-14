@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { API } from 'aws-amplify'
+import React from "react";
 
 const SquareCountry = ({ squareData, bandData, id }) => {
     
-    if (squareData != [] && squareData.length > 0 && squareData[0].hasOwnProperty('players')){
+    if (squareData !== [] && squareData.length > 0 && squareData[0].hasOwnProperty('players')){
         let players = squareData[0].players;
         let countryPlayer = {};
         let countryBand = {};
@@ -17,7 +16,7 @@ const SquareCountry = ({ squareData, bandData, id }) => {
         }
 
         for (let i = 0; i < bandData.length; i++) {
-            if (Number(bandData[i].id) == id) {
+            if (Number(bandData[i].id)=== id) {
                 countryBand = bandData[i];
             }
         }
