@@ -17,6 +17,14 @@
           ],
           "category": "function",
           "resourceName": "bandLambda"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "scoreLambda"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -27,6 +35,37 @@
     "bandLambda": {
       "build": true,
       "dependsOn": [
+        {
+          "attributeEnvMap": {
+            "Arn": "TABLE_ARN",
+            "Name": "TABLE_NAME"
+          },
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "storage",
+          "resourceName": "bandTable"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "scoreLambda": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributeEnvMap": {
+            "Arn": "TABLE_ARN",
+            "Name": "TABLE_NAME"
+          },
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "storage",
+          "resourceName": "squareTable"
+        },
         {
           "attributeEnvMap": {
             "Arn": "TABLE_ARN",
@@ -84,6 +123,22 @@
         {
           "category": "function",
           "resourceName": "bandLambda"
+        }
+      ]
+    },
+    "AMPLIFY_function_scoreLambda_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "scoreLambda"
+        }
+      ]
+    },
+    "AMPLIFY_function_scoreLambda_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "scoreLambda"
         }
       ]
     },

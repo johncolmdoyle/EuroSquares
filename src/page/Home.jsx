@@ -4,11 +4,12 @@ import PlayerList from "../components/playerList/PlayerList";
 import { v4 as uuidv4 } from 'uuid';
 import { validate as uuidValidate } from 'uuid';
 import { API } from 'aws-amplify'
+import { Link } from 'react-router-dom';
 
 const Home = () => {  
     const [squareData, setSquareData] = useState([]);
     const [squareId, setSquareId] = useState([]);
-    
+
     useEffect(() => {
         createSquare()
       }, [squareId])
@@ -46,6 +47,9 @@ const Home = () => {
       <div className="mt-4 d-flex justify-content-center flex-column">
         <AddPlayer getSquare={getSquare} squareId={squareId}/>
         <PlayerList squareData={squareData} />
+        <Link to={`/square/${squareId}`}>
+            <button>Generate Square</button>
+        </Link>
       </div>
     );
   };
