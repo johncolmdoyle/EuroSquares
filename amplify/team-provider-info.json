@@ -29,7 +29,7 @@
         },
         "scoreLambda": {
           "deploymentBucketName": "amplify-eurosquares-dev-111542-deployment",
-          "s3Key": "amplify-builds/scoreLambda-7a784651654e4d79312f-build.zip"
+          "s3Key": "amplify-builds/scoreLambda-2b4e7054586e36554c2f-build.zip"
         }
       },
       "storage": {

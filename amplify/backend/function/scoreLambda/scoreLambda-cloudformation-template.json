@@ -181,20 +181,7 @@
                 "dynamodb:DeleteItem"
               ],
               "Resource": [
-                {
-                  "Ref": "storagesquareTableArn"
-                },
-                {
-                  "Fn::Join": [
-                    "/",
-                    [
-                      {
-                        "Ref": "storagesquareTableArn"
-                      },
-                      "index/*"
-                    ]
-                  ]
-                }
+                "*"
               ]
             }
           ]

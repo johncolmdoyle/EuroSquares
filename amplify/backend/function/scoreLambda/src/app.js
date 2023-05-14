@@ -73,17 +73,14 @@ app.post(path, async(req, res) => {
 
   let bands = bandResponse.Items;
   
-  console.log("Processing Begins")
   for (let i = 0; i < squareResponse.Items.length; i++) {
     let square = squareResponse.Items[i];
     if (square.hasOwnProperty("players")) {
       
       for(let j = 0; j < square.players.length; j++) {
         let player = square.players[j];
-
-        if (!player.hasOwnProperty("score")) {
-          player.score = 0;
-        }
+        // Init score to 0
+        player.score = 0;
 
         if (player.hasOwnProperty("countries")){
           for (let k = 0; k < player.countries.length; k++) {
@@ -96,10 +93,7 @@ app.post(path, async(req, res) => {
             }
           }
         }
-
-        console.log("Player: " + player.name + " Score: " + player.score)
       }
-      console.log("One Squares: " + JSON.stringify(square))
       
       await dynamodb.update({
               TableName: squareTable,
