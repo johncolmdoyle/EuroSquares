@@ -1,6 +1,27 @@
 import React from "react";
+import Button from "react-bootstrap/Button";
+import { API } from 'aws-amplify'
+import Form from "react-bootstrap/Form";
+const PlayerList = ({ getSquare, squareData, bandData }) => {
+  async function postScore() {
+    const apiName = 'v1';
+    const path = '/score';
+    const myInit = {
+        body: {},
+        headers: {} 
+    };
 
-const PlayerList = ({ squareData, bandData }) => {
+    try {
+        await API.post(apiName, path, myInit);
+        getSquare();
+    } catch (err) { console.log('error calculating scores') }
+}
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+  postScore();
+};
+
 
   if (squareData != null && squareData.length > 0 && squareData[0].hasOwnProperty('players')) {
     let players = squareData[0].players;
@@ -30,6 +51,26 @@ const PlayerList = ({ squareData, bandData }) => {
         }
         </tbody>
         </table>
+        <Form
+          onSubmit={handleSubmit}
+          className=" d-flex justify-content-center flex-column"
+        >
+          <Form.Group className="mb-1" controlId="formAdd">
+            <Button
+            style={{
+              backgroundColor: "rgb(192 199 224) ",
+              color: "white",
+              width: "30%",
+              textAlign: "center",
+            }}
+            className="m-auto"
+            variant=" btn-lg"
+            type="submit"
+          >
+            Update Scores
+          </Button>
+          </Form.Group>
+        </Form>
       </div>
     );
   } 

@@ -39,7 +39,7 @@ const Square = () => {
 
     return (
       <div className="mt-4 d-flex justify-content-center flex-column">
-        <PlayerList squareData={squareData} bandData={bandData} />
+        <PlayerList getSquare={getSquare} squareData={squareData} bandData={bandData} />
         <hr />
         <PlayerSquare squareData={squareData} bandData={bandData} />
       </div>

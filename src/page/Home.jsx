@@ -44,7 +44,7 @@ const Home = () => {
     return (
       <div className="mt-4 d-flex justify-content-center flex-column">
         <AddPlayer getSquare={getSquare} squareId={squareId}/>
-        <PlayerList squareData={squareData} />
+        <PlayerList getSquare={getSquare} squareData={squareData} />
         <Link to={`/square/${squareId}`}>
             <button>Generate Square</button>
         </Link>
